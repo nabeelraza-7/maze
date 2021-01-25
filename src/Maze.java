@@ -12,15 +12,17 @@ public class Maze {
     private Node finalNode = null;
 
     public static void main(String[] args) {
-        int height = 8;
-        int width = 12;
+        int height = 10;
+        int width = 30;
         Maze maze = new Maze(height, width);
         maze.printMaze();
+        
         for (int i = 0; i < width; i++) {
             System.out.print(" =");
         }
         System.out.println();
-        Node start = new Node(0, 0);
+
+        Node start = new Node(0, 0);// Node to start from
         if (maze.solveMaze(start)) {
             maze.markPath();
             maze.printMaze();
@@ -48,8 +50,8 @@ public class Maze {
             maze[parent.x][parent.y] = '*';
             parent = parent.parent;
         }
-        maze[0][0] = 'S';
-        maze[height - 1][width - 1] = 'E';
+        maze[0][0] = 'S'; // Starting location
+        maze[height - 1][width - 1] = 'E'; // Ending location
     }
 
     private void fillMaze() {
@@ -58,7 +60,6 @@ public class Maze {
          */
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                // maze[i][j] = ' ';
                 if (Math.random() < 0.2) {
                     maze[i][j] = '-';
                 } else {
@@ -66,8 +67,8 @@ public class Maze {
                 }
             }
         }
-        maze[0][0] = 'S';
-        maze[height - 1][width - 1] = 'E';
+        maze[0][0] = 'S'; // Starting location
+        maze[height - 1][width - 1] = 'E'; // Ending location
     }
 
     private boolean goalReached(Node pos) {
@@ -122,8 +123,7 @@ public class Maze {
         /**
          * Main function which solves the maze it implements Depth First Search
          */
-        // This will Store all the Nodes that have been checked.
-        ArrayList<Node> checked = new ArrayList<>();
+        ArrayList<Node> checked = new ArrayList<>();// Stores all the checked nodes
         Stack<Node> path = new Stack<>();
         path.push(pos);
         // Implementing Depth-First Search
@@ -144,8 +144,11 @@ public class Maze {
         return false;
     }
 
-    private boolean checkIfExists(ArrayList<Node> l, Node n) {
-        for (Node node : l) {
+    private boolean checkIfExists(ArrayList<Node> list, Node n) {
+        /**
+         * Checks if the node already exists in the checked list
+         */
+        for (Node node : list) {
             if (node.x == n.x && node.y == n.y)
                 return true;
         }
