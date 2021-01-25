@@ -11,6 +11,5 @@ The src folder contains two classes:
 
 ## ALOGRITHM used
     This program currently uses Depth First Search to solve the maze.
-    <a href="https://en.wikipedia.org/wiki/Depth-first_search#:~:text=Depth%2Dfirst%20search%20(DFS),along%20each%20branch%20before%20backtracking.">Click here</a> for more information
 
 Feel free to contribute. ^_^
