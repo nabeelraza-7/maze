@@ -13,6 +13,6 @@ The src folder contains two classes:
     
     This program currently uses Depth First Search to solve the maze.
 
-    [DFS](https://en.wikipedia.org/wiki/Depth-first_search#:~:text=Depth%2Dfirst%20search%20(DFS),along%20each%20branch%20before%20backtracking.)
+    [DFS](https://en.wikipedia.org/wiki/Depth-first_search)
 
 Feel free to contribute. ^_^
