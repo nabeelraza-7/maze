@@ -1,30 +1,42 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-/**
- *  (1,1, (null))
- *  (1,2, (1, 1, (null)))
- *  (1,3, (1,2, (1, 1, (null))))
- */
-
 public class Maze {
-    int width;
-    int height;
-    char[][] maze;
-    Node finalNode = null;
+    /**
+     * 
+     * @author: Nabeel Raza
+     */
+    private int height;
+    private int width;
+    private char[][] maze;
+    private Node finalNode = null;
 
-    public static void main(String[] args){
-        Maze m = new Maze(8, 8);
-        m.printMaze();
-        System.out.println("================================");
+    public static void main(String[] args) {
+        int height = 8;
+        int width = 12;
+        Maze maze = new Maze(height, width);
+        maze.printMaze();
+        for (int i = 0; i < width; i++) {
+            System.out.print(" =");
+        }
+        System.out.println();
         Node start = new Node(0, 0);
-        if(m.solveMaze(start)){
-            m.markPath();
-            m.printMaze();
+        if (maze.solveMaze(start)) {
+            maze.markPath();
+            maze.printMaze();
         } else {
             System.out.println("Failed to find a solution");
         }
-        // System.out.println(m.possibleMoves(start));
+    }
+
+    public Maze(int height, int width) {
+        /**
+         * Creates the maze
+         */
+        this.height = height;
+        this.width = width;
+        maze = new char[height][width];
+        fillMaze();
     }
 
     public void markPath() {
@@ -32,112 +44,97 @@ public class Maze {
          * Marks the followed path with '*'
          */
         Node parent = finalNode;
-        while (parent != null){
+        while (parent != null) {
             maze[parent.x][parent.y] = '*';
             parent = parent.parent;
         }
         maze[0][0] = 'S';
-        maze[width-1][height-1] = 'E';
+        maze[height - 1][width - 1] = 'E';
     }
 
-    public Maze(int width, int height) {
-        /**
-         * Creates the maze
-         */
-        this.width = width;
-        this.height = height;
-        maze = new char[width][height];
-        fillMaze();
-    }
-
-    private void fillMaze(){
+    private void fillMaze() {
         /**
          * Fills the maze with 20% of '-'
          */
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 // maze[i][j] = ' ';
-                if (Math.random() < 0.2){
+                if (Math.random() < 0.2) {
                     maze[i][j] = '-';
-                } else{
+                } else {
                     maze[i][j] = ' ';
                 }
             }
         }
         maze[0][0] = 'S';
-        maze[width-1][height-1] = 'E';
+        maze[height - 1][width - 1] = 'E';
     }
 
-    private boolean goalReached(Node pos){
+    private boolean goalReached(Node pos) {
         /**
          * Checks if the current position pos is the desired goal
          */
-        return (pos.x == width-1) && (pos.y == height-1);
+        return (pos.x == height - 1) && (pos.y == width - 1);
     }
 
-    public void printMaze(){
+    public void printMaze() {
         /**
          * Displays the maze on console
          */
-        for (int i = 0; i < width; i++){
+        for (int i = 0; i < height; i++) {
             System.out.print("|");
-            for (int j = 0; j < height; j++){
+            for (int j = 0; j < width; j++) {
                 System.out.print(" " + maze[i][j]);
             }
             System.out.println("|");
         }
     }
-    
-    private ArrayList<Node> possibleMoves(Node pos){
+
+    private ArrayList<Node> possibleMoves(Node pos) {
         /**
-         * Returns a list with all the possible moves
-         * out of NORTH, SOUTH, WEST and EAST
+         * Returns a list with all the possible moves out of NORTH, SOUTH, WEST and EAST
          */
         ArrayList<Node> result = new ArrayList<>();
         // NORTH
-        if (pos.y > 0 && maze[pos.x][pos.y-1] != '-'){
-            Node temp = new Node(pos.x, pos.y-1);
+        if (pos.y > 0 && maze[pos.x][pos.y - 1] != '-') {
+            Node temp = new Node(pos.x, pos.y - 1);
             result.add(temp);
-        } 
+        }
         // SOUTH
-        if (pos.y < height-1 && maze[pos.x][pos.y+1] != '-'){
-            Node temp = new Node(pos.x, pos.y+1);
+        if (pos.y < width - 1 && maze[pos.x][pos.y + 1] != '-') {
+            Node temp = new Node(pos.x, pos.y + 1);
             result.add(temp);
-        } 
+        }
         // WEST
-        if (pos.x > 0 && maze[pos.x-1][pos.y] != '-'){
-            Node temp = new Node(pos.x-1, pos.y);
+        if (pos.x > 0 && maze[pos.x - 1][pos.y] != '-') {
+            Node temp = new Node(pos.x - 1, pos.y);
             result.add(temp);
-        } 
+        }
         // EAST
-        if (pos.x < width-1 && maze[pos.x+1][pos.y] != '-'){
-            Node temp = new Node(pos.x+1, pos.y);
+        if (pos.x < height - 1 && maze[pos.x + 1][pos.y] != '-') {
+            Node temp = new Node(pos.x + 1, pos.y);
             result.add(temp);
-        } 
+        }
         return result;
     }
 
-    public boolean solveMaze(Node pos){
+    public boolean solveMaze(Node pos) {
         /**
-         * Main function which solves the maze
-         * it implements Depth First Search
+         * Main function which solves the maze it implements Depth First Search
          */
-        //This will Store all the Nodes that have been checked.
+        // This will Store all the Nodes that have been checked.
         ArrayList<Node> checked = new ArrayList<>();
         Stack<Node> path = new Stack<>();
         path.push(pos);
         // Implementing Depth-First Search
-        while (!path.isEmpty()){
+        while (!path.isEmpty()) {
             Node currentNode = path.pop();
-            if (goalReached(currentNode)){
+            if (goalReached(currentNode)) {
                 finalNode = currentNode;
                 return true;
             }
-            for (Node child: possibleMoves(currentNode)){
-                // System.out.println("Current Node: " + currentNode);
-                // if (checked.contains(child)){
-                if (checkIfExists(checked, child)){
-                    // System.out.println("Already Checked!");
+            for (Node child : possibleMoves(currentNode)) {
+                if (checkIfExists(checked, child)) {
                     continue;
                 }
                 checked.add(child);
@@ -147,9 +144,10 @@ public class Maze {
         return false;
     }
 
-    private boolean checkIfExists(ArrayList<Node> l, Node n){
-        for (Node node: l){
-            if (node.x == n.x && node.y == n.y) return true;
+    private boolean checkIfExists(ArrayList<Node> l, Node n) {
+        for (Node node : l) {
+            if (node.x == n.x && node.y == n.y)
+                return true;
         }
         return false;
     }
