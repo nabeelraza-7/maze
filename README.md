@@ -1,14 +1,16 @@
-## Getting Started
+## MAZE in JAVA
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This is a flexible, auto-generated maze.
 
-## Folder Structure
+## Classes
 
-The workspace contains two folders by default, where:
+The src folder contains two classes:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- `Maze`: Implements the algorithm to create and solve the maze
+- `Node`: To keep a check on the node locations of the maze
 
-## Dependency Management
+## ALOGRITHM used
+    This program currently uses Depth First Search to solve the maze.
+    <a href="https://en.wikipedia.org/wiki/Depth-first_search#:~:text=Depth%2Dfirst%20search%20(DFS),along%20each%20branch%20before%20backtracking.">Click here</a> for more information
 
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+Feel free to contribute. ^_^
