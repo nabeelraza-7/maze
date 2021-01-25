@@ -18,8 +18,4 @@ public class Node{
         this.y = n.y;
         this.parent = parent;
     }
-
-    public String toString(){
-        return "(" + x + ", " + y + ")" + parent;
-    }
 }

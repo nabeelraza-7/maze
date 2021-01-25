@@ -13,7 +13,7 @@ public class Maze {
 
     public static void main(String[] args) {
         int height = 10;
-        int width = 30;
+        int width = 10;
         Maze maze = new Maze(height, width);
         maze.printMaze();
         
